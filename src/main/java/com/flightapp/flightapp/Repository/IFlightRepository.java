@@ -1,6 +1,7 @@
 package com.flightapp.flightapp.Repository;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,9 +13,9 @@ import com.flightapp.flightapp.Entity.Flight;
 public interface IFlightRepository extends JpaRepository<Flight, Long> {
 
         List<Flight> findByDepartureAirportAndArrivalAirportAndDepartureDateTime(String departure, String arrival,
-                        Date departureDateTime);
+                        LocalDateTime departureDateTime);
 
         List<Flight> findByDepartureAirportAndArrivalAirportAndDepartureDateTimeAndReturnDateTime(String departure,
-                        String arrival, Date departureDateTime, Date returnDateTime);
+                        String arrival, LocalDateTime departureDateTime, LocalDateTime returnDateTime);
 
 }

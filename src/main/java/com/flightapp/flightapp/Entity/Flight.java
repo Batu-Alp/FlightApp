@@ -1,6 +1,7 @@
 package com.flightapp.flightapp.Entity;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,11 +18,12 @@ public class Flight {
     private Long id;
     private String departureAirport;
     private String arrivalAirport;
-    private Date departureDateTime;
-    private Date returnDateTime;
+    private LocalDateTime departureDateTime;
+    private LocalDateTime returnDateTime;
     private double price;
 
-    public Flight(Long id, String departureAirport, String arrivalAirport, Date departureDateTime, Date returnDateTime,
+    public Flight(Long id, String departureAirport, String arrivalAirport, LocalDateTime departureDateTime,
+            LocalDateTime returnDateTime,
             double price) {
         this.id = id;
         this.departureAirport = departureAirport;
@@ -29,6 +31,9 @@ public class Flight {
         this.departureDateTime = departureDateTime;
         this.returnDateTime = returnDateTime;
         this.price = price;
+    }
+
+    public Flight() {
     }
 
     public Long getId() {
@@ -55,19 +60,19 @@ public class Flight {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public Date getDepartureDateTime() {
+    public LocalDateTime getDepartureDateTime() {
         return departureDateTime;
     }
 
-    public void setDepartureDateTime(Date departureDateTime) {
+    public void setDepartureDateTime(LocalDateTime departureDateTime) {
         this.departureDateTime = departureDateTime;
     }
 
-    public Date getReturnDateTime() {
+    public LocalDateTime getReturnDateTime() {
         return returnDateTime;
     }
 
-    public void setReturnDateTime(Date returnDateTime) {
+    public void setReturnDateTime(LocalDateTime returnDateTime) {
         this.returnDateTime = returnDateTime;
     }
 
