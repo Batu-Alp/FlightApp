@@ -1,6 +1,7 @@
 package com.flightapp.flightapp.Service;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,14 +60,14 @@ public class FlightService {
         }
     }
 
-    public List<Flight> searchOneWayFlights(String departure, String arrival, Date departureDateTime) {
+    public List<Flight> searchOneWayFlights(String departure, String arrival, LocalDateTime departureDateTime) {
 
         return flightRepository.findByDepartureAirportAndArrivalAirportAndDepartureDateTime(departure, arrival,
                 departureDateTime);
     }
 
-    public List<Flight> searchRoundTripFlights(String departure, String arrival, Date departureDateTime,
-            Date returnDateTime) {
+    public List<Flight> searchRoundTripFlights(String departure, String arrival, LocalDateTime departureDateTime,
+            LocalDateTime returnDateTime) {
 
         return flightRepository.findByDepartureAirportAndArrivalAirportAndDepartureDateTimeAndReturnDateTime(departure,
                 arrival, departureDateTime, returnDateTime);

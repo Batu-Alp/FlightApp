@@ -17,6 +17,7 @@ import com.flightapp.flightapp.Entity.Flight;
 import com.flightapp.flightapp.Service.FlightService;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,7 @@ public class FlightController {
         return flightService.findFlights();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{flightId}")
     public ResponseEntity<String> getFlightById(@PathVariable Long flightId) {
         Flight flight = flightService.getFlightById(flightId);
         if (flight != null) {
@@ -67,8 +68,8 @@ public class FlightController {
     public List<Flight> searchFlights(
             @RequestParam String departure,
             @RequestParam String arrival,
-            @RequestParam Date departureDateTime,
-            @RequestParam(required = false) Date returnDateTime) {
+            @RequestParam LocalDateTime departureDateTime,
+            @RequestParam(required = false) LocalDateTime returnDateTime) {
 
         if (returnDateTime != null) {
             return flightService.searchRoundTripFlights(departure, arrival, departureDateTime, returnDateTime);
