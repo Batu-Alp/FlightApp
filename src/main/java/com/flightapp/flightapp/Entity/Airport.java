@@ -20,6 +20,10 @@ public class Airport {
         this.city = city;
     }
 
+    public Airport() {
+
+    }
+
     public Long getId() {
         return id;
     }
