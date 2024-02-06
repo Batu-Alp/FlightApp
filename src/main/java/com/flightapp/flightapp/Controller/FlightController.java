@@ -1,6 +1,7 @@
 package com.flightapp.flightapp.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import com.flightapp.flightapp.Service.FlightService;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -64,17 +66,55 @@ public class FlightController {
 
     }
 
-    @GetMapping("/search")
-    public List<Flight> searchFlights(
+    @GetMapping("/searchByAirports")
+    public ResponseEntity<List<Flight>> searchByAirports(
+            @RequestParam String departurer_airport,
+            @RequestParam String arrival_airport) {
+        List<Flight> result = flightService.searchByAirports(departurer_airport, arrival_airport);
+        return new ResponseEntity<>(result,
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/searchByDepartureAndArrivalTimes")
+    public List<Flight> searchByDepartureAndArrivalTimes(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime departureDateTime,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime arrivalDateTime) {
+        return flightService.searchByDepartureAndArrivalTimes(departureDateTime, arrivalDateTime);
+    }
+
+    @GetMapping("/searchByDepartureTime")
+    public ResponseEntity<?> searchFlightsByDepartureTime(
             @RequestParam String departure,
             @RequestParam String arrival,
-            @RequestParam LocalDateTime departureDateTime,
-            @RequestParam(required = false) LocalDateTime returnDateTime) {
+            @RequestParam("departureDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime departureDateTime, // 2024-02-06T14:28:17.653000
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime returnDateTime) // 2024-02-06T16:28:17.653000
+    {
 
-        if (returnDateTime != null) {
-            return flightService.searchRoundTripFlights(departure, arrival, departureDateTime, returnDateTime);
+        List<Flight> departureFlights = flightService.searchOneWayFlights(
+                departure, arrival, departureDateTime);
+
+        return new ResponseEntity<>(departureFlights, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchFlights(
+            @RequestParam String departure,
+            @RequestParam String arrival,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime departureDateTime,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime returnDateTime) {
+
+        List<Flight> departures = flightService.searchOneWayFlights(
+                departure, arrival, departureDateTime);
+
+        if (returnDateTime == null) {
+            return new ResponseEntity<>(departures, HttpStatus.OK);
         } else {
-            return flightService.searchOneWayFlights(departure, arrival, departureDateTime);
+            List<Flight> returns = flightService.searchRoundTripFlights(
+                    departure, arrival, departureDateTime, returnDateTime);
+            return new ResponseEntity<>(new Object[] { departures, returns },
+                    HttpStatus.OK);
+
         }
+
     }
 }
