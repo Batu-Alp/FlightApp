@@ -83,20 +83,5 @@ public class FlightService {
         return flightRepository.findByDepartureAirportAndArrivalAirportAndDepartureDateTimeAndReturnDateTime(departure,
                 arrival, departureDateTime, returnDateTime);
     }
-    /*
-     * public List<Flight> searchOneWayFlights(String departure, String arrival,
-     * LocalDateTime departureDateTime) {
-     * 
-     * return flightRepository.findByDeparturesAndArrivals(departure, arrival,
-     * departureDateTime);
-     * }
-     * 
-     * public List<Flight> searchRoundTripFlights(String departure, String arrival,
-     * LocalDateTime departureDateTime,
-     * LocalDateTime returnDateTime) {
-     * 
-     * return flightRepository.findByRoundTrips(departure,
-     * arrival, departureDateTime, returnDateTime);
-     * }
-     */
+
 }

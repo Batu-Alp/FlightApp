@@ -17,14 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.flightapp.flightapp.Entity.Flight;
 import com.flightapp.flightapp.Service.FlightService;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/flights")
-
 public class FlightController {
 
     @Autowired
