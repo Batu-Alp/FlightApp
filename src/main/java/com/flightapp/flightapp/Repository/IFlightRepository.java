@@ -22,20 +22,5 @@ public interface IFlightRepository extends JpaRepository<Flight, Long> {
 
         List<Flight> findByDepartureDateTimeAndReturnDateTime(LocalDateTime departureDateTime,
                         LocalDateTime returnDateTime);
-        /*
-         * List<Flight> findByDeparturesAndArrivals(String departureAirport, String
-         * arrivalAirport,
-         * LocalDateTime departureDateTime);
-         * 
-         * List<Flight> findByRoundTrips(String departureAirport,
-         * String arrivalAirport, LocalDateTime departureDateTime, LocalDateTime
-         * returnDateTime);
-         */
-        /*
-         * 
-         * List<Flight> findByRoundTrips(String departure,
-         * String arrival, LocalDateTime departureDateTime, LocalDateTime
-         * returnDateTime);
-         */
 
 }

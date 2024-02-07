@@ -17,22 +17,26 @@ public class ScheduleFlights {
 
     @Autowired
     private IFlightRepository flightRepository;
+    private static final List<String> airports = List.of("New York", "London", "Paris", "Tokyo", "Sydney",
+            "Los Angeles");
 
     @Scheduled(cron = "0 0 7 * * ?")
-    public void updateFlightInformation() {
-        List<Flight> flights = fetchMockFlightData();
-        flightRepository.saveAll(flights);
+    public void fetchFlightInfo() {
+        List<Flight> mockFlights = generateMockFlightData();
+        flightRepository.saveAll(mockFlights);
     }
 
-    private List<Flight> fetchMockFlightData() {
+    private List<Flight> generateMockFlightData() {
         List<Flight> mockFlights = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Flight flight = new Flight();
-            flight.setDepartureAirport("Airport " + i);
-            flight.setArrivalAirport("Airport " + (i + 1));
+            String departureAirport = airports.get(i);
+            String arrivalAirport = airports.get(i + 1);
+            flight.setDepartureAirport(departureAirport);
+            flight.setArrivalAirport(arrivalAirport);
             flight.setDepartureDateTime(LocalDateTime.now().plusDays(i));
-            flight.setReturnDateTime(LocalDateTime.now().plusDays(i).plusHours(2));
-            flight.setPrice(new Random().nextDouble() * 100 + 100);
+            flight.setReturnDateTime(LocalDateTime.now().plusDays(i).plusHours(1));
+            flight.setPrice(new Random().nextDouble() * 1000 + 50);
             mockFlights.add(flight);
         }
         return mockFlights;
